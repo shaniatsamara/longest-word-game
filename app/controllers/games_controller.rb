@@ -17,6 +17,8 @@ class GamesController < ApplicationController
                elsif include?(@letters, @word) && (valid_word['found'] == false)
                  "Sorry but #{@word} does not seem to be a valid English word..."
                elsif include?(@letters, @word) && (valid_word['found'] == true)
+                 score = @word.length
+                 @score = increment_score(score)
                  "Congratulations! #{@word} is a valid English word!"
                end
   end
@@ -32,5 +34,13 @@ class GamesController < ApplicationController
       end
     end
     true
+  end
+
+  def increment_score(score)
+    if session[:score].nil?
+      session[:score] = 0
+    else
+      session[:score] += score
+    end
   end
 end
